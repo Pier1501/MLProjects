@@ -40,14 +40,18 @@ yy_median = main_df['SALARY'].median()
 # where Q is the intercept and B is the slope and are going to be the predicted parameters
 # In our case the result is SALARY = B * EXP + Q
 
+# Calculating all errors for the variables
 xx_err = [xx - xx_mean for xx in main_df['EXP']]
 yy_err = [yy - yy_mean for yy in main_df['SALARY']]
 
 errors = [xer * yer for xer, yer in zip(xx_err,yy_err)]
+
+# Finding the predicted values for slope and intercept
 pred_slope = sum(errors)/sum([x*x for x in xx_err])
 
 pred_intercept = yy_mean - pred_slope * xx_mean
 
+# Finding the RSS, RSE, TSS values
 RSS_values = [(yy-pred_intercept-pred_slope*xx)**2 for xx, yy in zip(main_df['EXP'],main_df['SALARY'])] 
 
 RSS = sum(RSS_values)
@@ -57,9 +61,20 @@ RSE = np.sqrt(RSS/(len(RSS_values)-2))
 
 TSS = sum([(yy - yy_mean)**2 for yy in main_df['SALARY']])
 
+# Evaluating the R_squared statistic
 R_squared = 1 - RSS/TSS
 
-std_dev = main_df.std()
+# Now we are going to do an inference on the predicted values, to make sure 
+# we have reliable values
+# We are creating a table with the coefficients, std error, t-statistic and p-value
 
-exp_stddev = std_dev[0]
-salary_stddev = std_dev[1]
+y_std_dev = main_df.std()[1]
+
+xx_sum_sq_err = sum([(xx-xx_mean)**2 for xx in main_df['EXP']])
+
+slope_std_err_sq = (y_std_dev*y_std_dev)/xx_sum_sq_err
+
+intercept_std_err_sq = (y_std_dev*y_std_dev)*(1/len(main_df['EXP'])+ xx_mean/xx_sum_sq_err)
+
+slope_t_stat = 
+intercept_t_stat = 
