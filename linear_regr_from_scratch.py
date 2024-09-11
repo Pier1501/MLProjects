@@ -11,7 +11,6 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import scipy.stats as sps
-import sklearn.linear_model as sklin
 
 
 original_df = pd.read_csv('Experience-Salary.csv')
@@ -119,12 +118,13 @@ Y = pred_slope*X + pred_intercept
 
 func_string = f'y={pred_slope:.2f}x+{pred_intercept:.2f}'
 
-plt.scatter(main_df['EXP'], main_df['SALARY'], s=3, label= func_string)
+plt.close()
+plt.scatter(main_df['EXP'], main_df['SALARY'], s = 3, label = func_string)
 plt.plot(X, Y, '-r')
-plt.title('Linear Regression between Experience-Salary')
+plt.title('Linear Regression of Salary on Experience')
 plt.legend(loc='upper left')
 plt.grid()
 
+plt.show()
 
-# Checking the results with sklearn
 
