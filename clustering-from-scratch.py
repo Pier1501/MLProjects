@@ -5,70 +5,51 @@ import scipy.stats as sci
 import random as rd
 import seaborn as sns
 
-# Creating 100 random points
+# Defining the values for the clusterization
+ERR = 10**(-5)
+N_CENTROIDS = 3
+
+
+# Creating the random points
 x = []
 y = []
 for _ in range(100):
     x.append(rd.randint(0, 101))
     y.append(rd.randint(0, 101))
 
-# Plotting the points
 sns.scatterplot(x = x, y = y)
 
-# Creating the list of points
+
+# We create the list of points
 rnd_points = [(xx, yy) for xx, yy in zip(x,y)]
 
-# We set the number of points
-N_CENTROIDS = 3
+
+# We randomly choose the centroids
+rnd_centroids = rd.sample(rnd_points, N_CENTROIDS)
+x_centroids = [centroid[0] for centroid in rnd_centroids]
+y_centroids = [centroid[1] for centroid in rnd_centroids]
 
 
-# Creating random centroids 
-centroid_x = []
-centroid_y = []
-for _ in range(N_CENTROIDS):
-    centroid_x.append(rd.randint(0, 101))
-    centroid_y.append(rd.randint(0, 101))
-
-
-# Saving centroids information in a dictionary
-def centroid_info(x_centroids, y_centroids, N_c):
-    centroid_coords = {(x_c, y_c): i for i, x_c, y_c in zip(range(N_c), x_centroids, y_centroids)}
-
-    return centroid_coords
-
-
-rnd_centroids = centroid_info(centroid_x, centroid_y, N_CENTROIDS)
-
-
-# Function to calculate the distance between two points of x-y coordinates
-def distance(point_coords, centroid_coords): #_coords is a tuple of length 2
-    sq_dist = 0
-    for p, c in zip(point_coords, centroid_coords):
-        sq_dist += (p - c)**2
-    
+# Function to calculate the distance between two points in the plane
+def distance(xx, yy, cx, cy): 
+    sq_dist = (xx - cx)**2 + (yy - cy)**2
     dist = np.sqrt(sq_dist)
     return dist
 
 
-# Clusterizing the points to the random centroids 
-def clusterize(points_list, centroids):
-    clusterization = {}
-    for point in points_list:
-        distances = []
-        for centroid in centroids.keys():
-            distances.append(distance(point, centroid))
-        
-        centroid_label = distances.index(max(distances))
-        clusterization = {**clusterization, **{point: centroid_label}}
-    
-    
-    return clusterization
+# Function to calculate the coordinates (weighted mean)
+def find_centroid(coords):
+    return sum(coords)/len(coords)
 
+
+# Function to define the clusterization 
+def clusterize(points_list, centroids):
+    clusterization = []
+    return clusterization
 
 cluster = clusterize(rnd_points, rnd_centroids)
 
-
-# 
+number_of_points_of_cluster = {k : cluster.count(k) for k in cluster.values()}
 
 sns.scatterplot(x = x, y = y, hue = cluster.values())
 

@@ -12,6 +12,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import scipy.stats as sps
 
+### PART 1 - Creating the linear regression algorithm for a simple case
 
 original_df = pd.read_csv('Experience-Salary.csv')
 
@@ -126,5 +127,63 @@ plt.legend(loc='upper left')
 plt.grid()
 
 plt.show()
+
+
+### PART 2 - Adapting the code and creating functions to automate the project
+
+def read_data(data_ref):
+    df = pd.read_csv(data_ref)
+    return df
+
+def get_data_info(dataframe):
+    dataframe.describe
+    df_shape = dataframe.shape
+    variables = dataframe.columns
+    y_coords = variables[0]
+    x_coords = variables[1]
+    return df_shape, x_coords, y_coords
+    
+def plot_data(xcol, ycol, points_size = 3, color = 'blue'):
+    plt.close()
+    plt.scatter(xcol, ycol, s = points_size, c = color)
+    plt.plot(xcol, ycol, '-r')
+    plt.title('Distribution of values for the dataframe')
+    plt.legend(loc = 'upper left')
+    plt.grid()
+    plt.show()
+
+mean_med_table_structure = {'Mean': [], 'Median': []}
+
+def check_distribution(xcol, ycol, indexes):
+    xcol_mean = xcol.mean()
+    xcol_med = xcol.median()
+
+    ycol_mean = ycol.mean()
+    ycol_med = ycol.median()
+
+    distr_table = pd.DataFrame(mean_med_table_structure, index = indexes)
+
+def plot_coords(col, dims = (10,10)):
+    fig = plt.figure(figsize = dims)
+    ax = fig.add_axes([0, 0, 1, 1])
+    
+    distr = ax.boxplot(col)
+
+
+def calc_errors():
+    pass
+
+def predict_regression():
+    pass
+
+def calc_metrics():
+    pass
+
+def accuracy_metrics():
+    pass
+
+def show_regression():
+    pass
+
 
 
