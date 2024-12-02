@@ -1,2 +1,2 @@
-# Machine Learning (from project-based-learning)
+# Machine Learning Projects
 
